@@ -29,9 +29,14 @@ test.o: test.c
 startup.o: startup.s
 	$(AS) -g startup.s -o startup.o
 test.elf: startup.o test.o
-	$(LD) -T test.ld test.o startup.o -o test.elf
+	$(LD) -g -T test.ld test.o startup.o -o test.elf
 qemu:
 	qemu-system-arm $(QEMU_ARGS)
+debug.ld: test.ld
+	sed -e 's/0x10000/0x0/' test.ld > $@
+
+test.gdb.elf: startup.o test.o debug.ld
+	$(LD) -g -T debug.ld test.o startup.o -o $@
 clean:
 	rm -rf *.o *.elf *.bin
 
