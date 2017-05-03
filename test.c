@@ -1,6 +1,6 @@
 //ref: http://blog.3mdeb.com/2014/08/07/debugging-coreboot-for-qemu-armv7-vexpress-a9-emulated-mainboard/
 
-#define VEXPRESS_A9
+//#define VEXPRESS_A9
 
 #ifdef ARM926EJ_S
 // qemu-system-arm -M versatilepb -m 128M -nographic -kernel test.bin
