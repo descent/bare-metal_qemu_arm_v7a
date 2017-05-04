@@ -20,16 +20,26 @@ CFLAGS+=-DVEXPRESS_A9 -march=armv7-a
 QEMU_ARGS= -M vexpress-a9 -m 128M -bios test.bin
 endif
 
+#CFLAGS+=-fPIC
 
+test.a9.bin: test.a9.elf
+	$(OBJCOPY) -O binary $< $@
 test.bin: test.elf
 	$(OBJCOPY) -O binary test.elf test.bin
 
 test.o: test.c
 	$(CC) $(CFLAGS) -c -g test.c -o test.o
+
+startup_vexpress_a9.o: startup_vexpress_a9.s
+	$(AS) -g $< -o $@
 startup.o: startup.s
 	$(AS) -g startup.s -o startup.o
+
 test.elf: startup.o test.o
 	$(LD) -g -T test.ld test.o startup.o -o test.elf
+
+test.a9.elf: startup_vexpress_a9.o test.o
+	$(LD) -g -T vexpress_a9.ld $^ -o $@
 qemu:
 	qemu-system-arm $(QEMU_ARGS)
 debug.ld: test.ld
