@@ -37,6 +37,8 @@ prefetch:
 abort:
         b       abort
 irq:
-        b       irq
+  LDR sp, =0x70008000
+  BL t
+  b irq
 swi:
         b       swi
