@@ -1,8 +1,8 @@
-ENTRY(_Reset)
+ENTRY(_start)
 SECTIONS
 {
  . = 0x0000;
- .startup . : { startup_vexpress_a9.o(.text) }
+ .startup . : { v_a9_init.o(.text) }
  .text : { *(.text) }
  .data : { *(.data) }
  .bss : { *(.bss COMMON) }
