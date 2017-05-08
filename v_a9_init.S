@@ -38,7 +38,7 @@ abort:
         b       abort
 irq:
   LDR sp, =0x70008000
-  BL t
+  @BL t
   b irq
 swi:
         b       swi
